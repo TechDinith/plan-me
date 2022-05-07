@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const SignInPage = () => {
+const CreateProjectPage = () => {
   interface iUser {
-    email: string;
-    password: string;
+    title: string;
+    content: string;
   }
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    title: "",
+    content: "",
   });
 
   const handleChange = (event: ChangeEvent) => {
@@ -29,21 +29,25 @@ const SignInPage = () => {
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="white">
-        <h5 className="grey-text text-darken-3">SignIn</h5>
+        <h5 className="grey-text text-darken-3">Create Project</h5>
         <div className="input-field">
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" onChange={handleChange} />
+          <label htmlFor="title">Title</label>
+          <input type="text" id="title" onChange={handleChange} />
         </div>
         <div className="input-field">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" onChange={handleChange} />
+          <label htmlFor="content">Content</label>
+          <textarea
+            className="materialize-textarea"
+            id="content"
+            onChange={handleChange}
+          />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Login</button>
+          <button className="btn pink lighten-1 z-depth-0">Create</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default SignInPage;
+export default CreateProjectPage;
