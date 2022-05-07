@@ -8,6 +8,7 @@ import ProjectDetailsPage from "./components/pages/ProjectDetails/ProjectDetails
 import SignInPage from "./components/pages/SignIn/SignIn.page";
 import SignUpPage from "./components/pages/SignUp/SignUp.page";
 import CreateProjectPage from "./components/pages/CreateProject/CreateProject.page";
+
 function App() {
   return (
     <BrowserRouter>

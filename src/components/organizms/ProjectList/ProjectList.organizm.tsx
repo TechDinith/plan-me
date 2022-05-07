@@ -1,12 +1,13 @@
+import { iProjects } from "../../../interfaces/InPlan.interface";
 import ProjectSummaryMol from "../../molecules/ProjectSummery/ProjectSummery.molecules";
 
-const ProjectListOrg = () => {
+const ProjectListOrg = ({ projects }: iProjects) => {
   return (
     <div className="project-list section">
-      <ProjectSummaryMol />
-      <ProjectSummaryMol />
-      <ProjectSummaryMol />
-      <ProjectSummaryMol />
+      {projects &&
+        projects.map((project) => {
+          return <ProjectSummaryMol {...project} key={project.id} />;
+        })}
     </div>
   );
 };
