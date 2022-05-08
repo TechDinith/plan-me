@@ -3,13 +3,13 @@ import ProjectListOrg from "../../organizms/ProjectList/ProjectList.organizm";
 import Notifications from "../../templates/Notifications/Notification.template";
 
 const DashboardPage = () => {
-  const projects = useAppSelector(({ inPlan }) => inPlan.projects);
+  const projects = useAppSelector(({ projects }) => projects);
 
   return (
     <div className="dashboard container">
       <div className="row">
         <div className="col s12 m6">
-          <ProjectListOrg projects={projects} />
+          {/* <ProjectListOrg projects={projects} /> */}
         </div>
         <div className="col s12 m5 offset-m1">
           <Notifications />

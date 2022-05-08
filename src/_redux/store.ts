@@ -1,11 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import inPlanReducer from "./inPlanSlice";
+import projectsReducer from "./inPlanSlice";
+import createSagaMiddleware from "@redux-saga/core";
+import watchProject from "./sagas/projectSaga";
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    inPlan: inPlanReducer,
+    projects: projectsReducer,
   },
+  middleware: [sagaMiddleware],
 });
+
+sagaMiddleware.run(watchProject);
 
 export type AppDispatch = typeof store.dispatch;
 

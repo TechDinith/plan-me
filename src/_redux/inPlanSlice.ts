@@ -1,43 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-export interface InPlanState {
-  projects: { id: string; title: string; content: string }[];
+export interface ProjectState {
+  projects: {
+    id: string;
+    title: string;
+    content: string;
+  }[];
 }
 
-const initialState: InPlanState = {
-  projects: [
-    {
-      id: "1",
-      title: "something1",
-      content: "content1",
-    },
-    {
-      id: "2",
-      title: "something2",
-      content: "content2",
-    },
-    {
-      id: "3",
-      title: "something3",
-      content: "content3",
-    },
-  ],
+const initialState: ProjectState = {
+  projects: [],
 };
 
-export const inPlanSlice = createSlice({
-  name: "inplan",
+export const projectSlice = createSlice({
+  name: "projects",
   initialState,
   reducers: {
-    authRed: (state) => {
-      return state;
+    createProjectRed: (
+      { projects },
+      { payload }: PayloadAction<ProjectState>
+    ) => {
+      void projects.push(payload.projects[0]);
     },
   },
 });
 
-export const { authRed } = inPlanSlice.actions;
+// export const inPlanSlice = createSlice(
+//   {
+//   name: "inplan",
+//   initialState,
+//   reducers: {
+//     createProjectRed: (
+//       { projects },
+//       { payload }: PayloadAction<InPlanState>
+//     ) => {
+//       projects = payload.projects;
+//     },
+
+//     authRed: (state) => {
+//       return state;
+//     },
+//   },
+// }
+// );
+
+export const { createProjectRed } = projectSlice.actions;
 
 //selector that can use when useSelector can't
-export const selectProject = (state: RootState) => state.inPlan.projects;
+export const selectProject = (state: RootState) => state.projects.projects;
 
-export default inPlanSlice.reducer;
+export default projectSlice.reducer;

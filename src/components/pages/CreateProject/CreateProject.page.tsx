@@ -1,45 +1,41 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../_redux/hooks";
+import { createProjectRed } from "../../../_redux/inPlanSlice";
 
 const CreateProjectPage = () => {
-  interface iUser {
-    title: string;
-    content: string;
-  }
+  const dispatch = useAppDispatch();
 
-  const [user, setUser] = useState({
-    title: "",
-    content: "",
-  });
+  const { register, handleSubmit } = useForm();
 
-  const handleChange = (event: ChangeEvent) => {
-    setUser({
-      ...user,
-      [event.target.id]: (event.target as HTMLInputElement).value,
-    } as iUser);
-  };
+  const onSubmit = (data: { [x: string]: any }) => {
+    const project = {
+      projects: [
+        {
+          id: Math.random().toString(),
+          title: data.title,
+          content: data.content,
+        },
+      ],
+    };
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    /**
-     * todo:
-     * develop
-     */
+    dispatch(createProjectRed(project));
   };
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="white">
+      <form onSubmit={handleSubmit((data) => onSubmit(data))} className="white">
         <h5 className="grey-text text-darken-3">Create Project</h5>
         <div className="input-field">
           <label htmlFor="title">Title</label>
-          <input type="text" id="title" onChange={handleChange} />
+          <input id="title" type="text" {...register("title")} />
         </div>
         <div className="input-field">
           <label htmlFor="content">Content</label>
           <textarea
             className="materialize-textarea"
             id="content"
-            onChange={handleChange}
+            {...register("content")}
           />
         </div>
         <div className="input-field">
