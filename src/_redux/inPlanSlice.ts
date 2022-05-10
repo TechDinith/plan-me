@@ -9,13 +9,18 @@ export interface ProjectState {
   }[];
 }
 
-const initialState: ProjectState = {
-  projects: [],
-};
+export interface UserState {
+  user: {
+    email: string;
+    password: string;
+  }[];
+}
 
 export const projectSlice = createSlice({
   name: "projects",
-  initialState,
+  initialState: {
+    projects: [],
+  } as ProjectState,
   reducers: {
     createProjectRed: (
       { projects },
@@ -37,29 +42,24 @@ export const projectSlice = createSlice({
   },
 });
 
-// export const inPlanSlice = createSlice(
-//   {
-//   name: "inplan",
-//   initialState,
-//   reducers: {
-//     createProjectRed: (
-//       { projects },
-//       { payload }: PayloadAction<InPlanState>
-//     ) => {
-//       projects = payload.projects;
-//     },
-
-//     authRed: (state) => {
-//       return state;
-//     },
-//   },
-// }
-// );
+export const userSlice = createSlice({
+  name: "user",
+  initialState: {
+    user: [],
+  } as UserState,
+  reducers: {
+    signInRed: ({ user }, { payload }: PayloadAction<UserState>) => {
+      void user.push(payload.user[0]);
+    },
+  },
+});
 
 export const { createProjectRed, setProjectsRed, sagaNotifierRed } =
   projectSlice.actions;
 
-//selector that can use when useSelector can't
-export const selectProject = (state: RootState) => state.projects.projects;
+export const { signInRed } = userSlice.actions;
 
-export default projectSlice.reducer;
+export default {
+  projectSlice: projectSlice.reducer,
+  userSlice: userSlice.reducer,
+};

@@ -1,6 +1,6 @@
 import { takeEvery, call, select } from "redux-saga/effects";
 import { store } from "../store";
-import firebaseConfig from "../../auth/firebase.config";
+import firebaseConfig from "../firebase-store-auth/firebase.config";
 import { addDoc, collection, getDocs } from "firebase/firestore/lite";
 import { setProjectsRed } from "../inPlanSlice";
 

@@ -1,13 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import projectsReducer from "./inPlanSlice";
+import myPlanReducer from "./inPlanSlice";
 import createSagaMiddleware from "@redux-saga/core";
 import watchProject from "./sagas/sagas";
+import { firebaseReducer } from "react-redux-firebase";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    projects: projectsReducer,
+    projects: myPlanReducer.projectSlice,
+    user: myPlanReducer.userSlice,
+    firebase: firebaseReducer,
   },
   middleware: [sagaMiddleware],
 });

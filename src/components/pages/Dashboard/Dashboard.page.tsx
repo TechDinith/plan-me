@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore/lite";
 import { useEffect, useState } from "react";
-import firebaseConfig from "../../../auth/firebase.config";
+import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
 import { useAppDispatch } from "../../../_redux/hooks";
 import { sagaNotifierRed, setProjectsRed } from "../../../_redux/inPlanSlice";
 import { store } from "../../../_redux/store";
