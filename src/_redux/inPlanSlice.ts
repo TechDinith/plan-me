@@ -23,6 +23,17 @@ export const projectSlice = createSlice({
     ) => {
       void projects.push(payload.projects[0]);
     },
+    sagaNotifierRed: () => {
+      console.log("Saga Notifier!");
+    },
+    setProjectsRed: (
+      { projects },
+      { payload }: PayloadAction<ProjectState>
+    ) => {
+      payload.projects.forEach((project) => {
+        projects.push(project);
+      });
+    },
   },
 });
 
@@ -45,7 +56,8 @@ export const projectSlice = createSlice({
 // }
 // );
 
-export const { createProjectRed } = projectSlice.actions;
+export const { createProjectRed, setProjectsRed, sagaNotifierRed } =
+  projectSlice.actions;
 
 //selector that can use when useSelector can't
 export const selectProject = (state: RootState) => state.projects.projects;

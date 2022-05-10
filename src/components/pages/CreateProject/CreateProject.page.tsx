@@ -1,4 +1,3 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../_redux/hooks";
 import { createProjectRed } from "../../../_redux/inPlanSlice";
@@ -8,18 +7,23 @@ const CreateProjectPage = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data: { [x: string]: any }) => {
-    const project = {
-      projects: [
-        {
-          id: Math.random().toString(),
-          title: data.title,
-          content: data.content,
-        },
-      ],
-    };
+  let count = 0;
 
-    dispatch(createProjectRed(project));
+  const onSubmit = (data: { [x: string]: any }) => {
+    count++;
+    if (count === 1) {
+      const project = {
+        projects: [
+          {
+            id: Math.random().toString(),
+            title: data.title,
+            content: data.content,
+          },
+        ],
+      };
+
+      dispatch(createProjectRed(project));
+    }
   };
 
   return (

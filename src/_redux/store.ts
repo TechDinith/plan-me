@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import projectsReducer from "./inPlanSlice";
 import createSagaMiddleware from "@redux-saga/core";
-import watchProject from "./sagas/projectSaga";
+import watchProject from "./sagas/sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 

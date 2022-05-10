@@ -1,12 +1,8 @@
 import { takeEvery, call, select } from "redux-saga/effects";
 import { store } from "../store";
 import firebaseConfig from "../../auth/firebase.config";
-import {
-  addDoc,
-  collection,
-  Firestore,
-  getDocs,
-} from "firebase/firestore/lite";
+import { addDoc, collection, getDocs } from "firebase/firestore/lite";
+import { setProjectsRed } from "../inPlanSlice";
 
 const { db } = firebaseConfig;
 
@@ -28,11 +24,24 @@ const createProject = async () => {
   console.log("Document written wit ID: ", docRef.id);
 };
 
+let count = 0;
 const getProjects = async () => {
-  const projectsCol = collection(db, "projects");
-  const projectSnapshot = await getDocs(projectsCol);
-  const projectList = projectSnapshot.docs.map((doc) => doc.data());
-  console.log("projectList", projectList);
+  count++;
+  if (count === 1) {
+    const projectsCol = collection(db, "projects");
+    const projectSnapshot = await getDocs(projectsCol);
+    const projectList = projectSnapshot.docs.map((doc) => {
+      return { id: doc.id, data: doc.data() };
+    });
+    const mappedProjects = projectList.map((project) => {
+      return {
+        id: project.id,
+        content: project.data.content,
+        title: project.data.title,
+      };
+    });
+    store.dispatch(setProjectsRed({ projects: mappedProjects }));
+  }
 };
 
 function* createProjectWorker(): any {
@@ -54,7 +63,7 @@ function* getProjectWorker(): any {
 function* watchProject() {
   try {
     yield takeEvery("projects/createProjectRed", createProjectWorker);
-    // yield takeEvery("admin/favoriteRed", getProjectWorker);
+    yield takeEvery("projects/sagaNotifierRed", getProjectWorker);
   } catch (error) {
     console.log(`error`, error);
   }

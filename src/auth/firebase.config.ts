@@ -1,22 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {
-  getFirestore,
-  collection,
-  Firestore,
-  getDocs,
-} from "firebase/firestore/lite";
+import { getFirestore } from "firebase/firestore/lite";
 // import { getFirebase } from "react-redux-firebase";
 // import { getFirestore } from "redux-firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAnaaLUhKwzwVS3UKCCHlWEDahCIhk4m3o",
-  authDomain: "inplan-199e2.firebaseapp.com",
-  projectId: "inplan-199e2",
-  storageBucket: "inplan-199e2.appspot.com",
-  messagingSenderId: "564537587845",
-  appId: "1:564537587845:web:69becec22c5e5be83d51ec",
-  measurementId: "G-D3ESXMHFZW",
+  apiKey: "AIzaSyDNi4XwlWl68v5XoflTFXYrV3LdopTTaYA",
+  authDomain: "inplantest-7966b.firebaseapp.com",
+  projectId: "inplantest-7966b",
+  storageBucket: "inplantest-7966b.appspot.com",
+  messagingSenderId: "546856978288",
+  appId: "1:546856978288:web:bc750fc4acfa603651f1b5",
+  measurementId: "G-2M46RBNBGP",
 };
 
 const app = initializeApp(firebaseConfig);
