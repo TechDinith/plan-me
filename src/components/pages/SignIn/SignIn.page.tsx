@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { signIn } from "../../../_redux/firebase-store-auth/auth/firebaseAuth";
+import {
+  signIn,
+  userObserver,
+} from "../../../_redux/firebase-store-auth/auth/firebaseAuth";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../../../_redux/hooks";
 import { signInRed } from "../../../_redux/inPlanSlice";
@@ -15,13 +18,14 @@ const SignInPage = () => {
     if (count === 1) {
       signIn({ email: data.email, password: data.password }).then((user) => {
         console.log("user", user);
-        console.log("firebase", store.getState().firebase);
       });
 
       dispatch(
         signInRed({ user: [{ email: data.email, password: data.password }] })
       );
     }
+
+    userObserver();
   };
 
   return (

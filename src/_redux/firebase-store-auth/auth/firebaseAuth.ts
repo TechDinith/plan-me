@@ -1,4 +1,9 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { store } from "../../store";
 
 interface iAuthUser {
@@ -6,8 +11,8 @@ interface iAuthUser {
   password: string;
 }
 
+const auth = getAuth();
 export const signIn = async (authUser: iAuthUser) => {
-  const auth = getAuth();
   const user = await signInWithEmailAndPassword(
     auth,
     authUser.email,
@@ -26,4 +31,26 @@ export const signIn = async (authUser: iAuthUser) => {
     });
 
   return user;
+};
+
+export const userObserver = () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log("user", user);
+    } else {
+      console.log("Sign out");
+    }
+  });
+};
+
+export const logOut = () => {
+  signOut(auth)
+    .then(() => {
+      console.log("Signed out!");
+      userObserver();
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
 };

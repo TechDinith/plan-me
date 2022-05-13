@@ -72,6 +72,7 @@ const DashboardPage = () => {
       setProjects(newProjects);
     });
   }, []);
+
   return (
     <div className="dashboard container">
       <div className="row">
