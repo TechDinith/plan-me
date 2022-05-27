@@ -8,7 +8,7 @@ const SignedInLinksTemplate = () => {
         <NavLink to="/create">New Project</NavLink>
       </li>
       <li>
-        <a onClick={logOut}>LogOut</a>
+        <a onClick={() => logOut()}>LogOut</a>
       </li>
       <li>
         <NavLink to="/" className="btn btn-floating pink lighten-1"></NavLink>

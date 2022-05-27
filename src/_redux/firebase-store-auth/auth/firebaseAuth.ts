@@ -11,8 +11,8 @@ interface iAuthUser {
   password: string;
 }
 
-const auth = getAuth();
 export const signIn = async (authUser: iAuthUser) => {
+  const auth = getAuth();
   const user = await signInWithEmailAndPassword(
     auth,
     authUser.email,
@@ -34,17 +34,23 @@ export const signIn = async (authUser: iAuthUser) => {
 };
 
 export const userObserver = () => {
+  const auth = getAuth();
+  let isUser = false;
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       console.log("user", user);
+      isUser = true;
     } else {
       console.log("Sign out");
+      isUser = false;
     }
   });
+  return isUser;
 };
 
 export const logOut = () => {
+  const auth = getAuth();
   signOut(auth)
     .then(() => {
       console.log("Signed out!");

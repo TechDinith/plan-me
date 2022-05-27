@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore/lite";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
 import { useAppDispatch } from "../../../_redux/hooks";
 import { sagaNotifierRed, setProjectsRed } from "../../../_redux/inPlanSlice";
@@ -16,7 +17,26 @@ const DashboardPage = () => {
     { id: "", title: "", content: "" },
   ]);
 
-  const { db } = firebaseConfig;
+  const { db, auth } = firebaseConfig;
+
+  useEffect(() => {
+    if (!auth.currentUser) navigate("/signin");
+
+    getProjects().then((project) => {
+      const newProjects = project!.map((newProject) => {
+        return {
+          id: newProject.id,
+          title: newProject.title,
+          content: newProject.content,
+        };
+      });
+
+      setProjects(newProjects);
+    });
+  }, [auth.currentUser]);
+
+  const navigate = useNavigate();
+
   let count = 0;
   const getProjects = async () => {
     count++;
@@ -58,20 +78,6 @@ const DashboardPage = () => {
       return mappedProjects;
     }
   };
-
-  useEffect(() => {
-    getProjects().then((project) => {
-      const newProjects = project!.map((newProject) => {
-        return {
-          id: newProject.id,
-          title: newProject.title,
-          content: newProject.content,
-        };
-      });
-
-      setProjects(newProjects);
-    });
-  }, []);
 
   return (
     <div className="dashboard container">

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
   signIn,
   userObserver,
@@ -7,7 +7,16 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../../../_redux/hooks";
 import { signInRed } from "../../../_redux/inPlanSlice";
 import { store } from "../../../_redux/store";
+import { useNavigate } from "react-router-dom";
+import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
 const SignInPage = () => {
+  const { auth } = firebaseConfig;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.currentUser) navigate("/");
+  });
+
   const { register, handleSubmit } = useForm();
 
   const dispatch = useAppDispatch();

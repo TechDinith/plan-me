@@ -1,7 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../_redux/hooks";
-
+import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
 const ProjectDetailsPage = () => {
+  const { auth } = firebaseConfig;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth.currentUser) navigate("/signin");
+  });
+
   const params = useParams();
   const projects = useAppSelector((state) =>
     state.projects.projects.filter((project) => project.id === params.id)

@@ -1,12 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../_redux/hooks";
 import { createProjectRed } from "../../../_redux/inPlanSlice";
+import { useNavigate } from "react-router-dom";
+import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
+import { useEffect } from "react";
 
 const CreateProjectPage = () => {
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit } = useForm();
+  const { auth } = firebaseConfig;
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!auth.currentUser) navigate("/signin");
+  });
+
+  const { register, handleSubmit } = useForm();
   let count = 0;
 
   const onSubmit = (data: { [x: string]: any }) => {

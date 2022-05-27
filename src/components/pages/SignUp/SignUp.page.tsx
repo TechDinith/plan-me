@@ -1,6 +1,15 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import firebaseConfig from "../../../_redux/firebase-store-auth/firebase.config";
 
 const SignUpPage = () => {
+  const { auth } = firebaseConfig;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.currentUser) navigate("/");
+  });
+
   interface iUser {
     email: string;
     password: string;
